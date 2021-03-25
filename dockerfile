@@ -17,12 +17,10 @@ FROM mcr.microsoft.com/dotnet/aspnet:5.0
 WORKDIR /app
 COPY --from=build /app .
 
-USER ContainerAdministrator
 # if certificate is needed
-#COPY YOUR_KEY_HERE.pfx .
-#ENV ASPNETCORE_Kestrel__Certificates__Default__Password="YOUR_KEY_PASSWORD_HERE"
-#ENV ASPNETCORE_Kestrel__Certificates__Default__Path="C:\\app\\YOUR_KEY_HERE.pfx"
+#COPY aspnetapp.pfx .
+#ENV ASPNETCORE_Kestrel__Certificates__Default__Password="<cryptic-password>"
+#ENV ASPNETCORE_Kestrel__Certificates__Default__Path="/app/aspnetapp.pfx"
 ENV ASPNETCORE_ENVIRONMENT=Development
-USER ContainerUser
 
-ENTRYPOINT ["dotnet" "AzureEventGridSimulator.dll"]
+ENTRYPOINT ["dotnet", "AzureEventGridSimulator.dll"]
